@@ -67,3 +67,10 @@
     border-radius: 2px;
     font-size: 13px;
 }
+
+@media only screen and (max-width: 980px) {
+    .right-sidebar {
+      display: none;
+      /* width: 0px; */
+    }
+  }
