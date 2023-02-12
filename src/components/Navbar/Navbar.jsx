@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import decode from 'jwt-decode';
-
 import { setCurrentUser } from '../../actions/currentUser';
 import logo from '../../assets/logo-stackoverflow.png';
 import logo1 from '../../assets/icon.png';
