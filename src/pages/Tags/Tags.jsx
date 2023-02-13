@@ -57,7 +57,7 @@ const Tags = () => {
                 <div className='tags-list-container'>
                     {
                         tagsList.map((tag) => (
-                            <TagsList tag={tag} key={tagsList.id}/>
+                            <TagsList tag={tag} key={tagsList?.id}/>
                         ))
                     }
                 </div>

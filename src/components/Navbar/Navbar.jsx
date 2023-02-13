@@ -35,7 +35,7 @@ const Navbar = () => {
       }
     }
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))));
-  }, [dispatch]);
+  }, [User?.token, dispatch]);
 
   return (
     <nav className="main-nav">
@@ -49,7 +49,7 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="nav-img" />
           <img src={logo1} alt="logo" className="nav-img1" />
         </Link>
-        <Link to="/" className="nav-item nav-btn">
+        {/* <Link to="/" className="nav-item nav-btn">
           About
         </Link>
         <Link to="/" className="nav-item nav-btn">
@@ -57,7 +57,7 @@ const Navbar = () => {
         </Link>
         <Link to="/" className="nav-item nav-btn">
           For Teams
-        </Link>
+        </Link> */}
 
         <form>
           <input type="text" placeholder="search..." />
@@ -73,7 +73,7 @@ const Navbar = () => {
             <Avatar
               backgroundColor="#009dff"
               px="10px"
-              py="7px"
+              py="5px"
               borderRadius="50%"
               color="white"
               textDecoration="none"
@@ -82,7 +82,7 @@ const Navbar = () => {
                 to={`/Users/${User?.result?._id}`}
                 style={{ color: 'white', textDecoration: 'none' }}
               >
-                {User.result.name.charAt(0).toUpperCase()}
+                {User.result.name?.charAt(0)?.toUpperCase()}
               </Link>
             </Avatar>
 
