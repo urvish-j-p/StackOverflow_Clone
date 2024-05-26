@@ -5,7 +5,6 @@ import QuestionList from "./QuestionsList";
 import { useSelector } from "react-redux";
 
 const HomeMainbar = () => {
-
   const location = useLocation();
   const user = 1;
   const navigate = useNavigate();
@@ -36,7 +35,10 @@ const HomeMainbar = () => {
       </div>
       <div>
         {questionsList.data === null ? (
-          <h1>Loading...Please wait for a while.</h1>
+          <div>
+            <div className="spinner"></div>
+            <h1 style={{textAlign:"center"}}>It may take few seconds...</h1>
+          </div>
         ) : (
           <>
             <p>{questionsList.data.length} questions</p>
