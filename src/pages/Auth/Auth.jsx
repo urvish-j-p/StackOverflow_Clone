@@ -46,7 +46,7 @@ const Auth = () => {
         <form onSubmit={handleSubmit}>
           {isSignup && (
             <label htmlFor="name">
-              <h4>Display Name</h4>
+              <h4>Name</h4>
               <input
                 type="text"
                 id="name"
@@ -75,22 +75,22 @@ const Auth = () => {
                     cursor: "pointer",
                   }}
                 >
-                  forgot password?
+                  {/* forgot password? */}
                 </p>
               )}
             </div>
             <input type="password" name="password" id="password" onChange={(e) => {
                   setPassword(e.target.value);
                 }} />
-            {isSignup && (
+            {/* {isSignup && (
               <p style={{ color: "#666767", fontSize: "13px" }}>
                 Passwords must contain at least eight
                 <br />
                 characters, including at least 1 letter and 1<br /> number.
               </p>
-            )}
+            )} */}
           </label>
-          {isSignup && (
+          {/* {isSignup && (
             <label htmlFor="check">
               <input
                 type="checkbox"
@@ -105,11 +105,11 @@ const Auth = () => {
                 company announcements and digests.
               </p>
             </label>
-          )}
+          )} */}
           <button type="submit" className="auth-btn">
             {isSignup ? "Sign up" : "Log in"}
           </button>
-          {isSignup && (
+          {/* {isSignup && (
             <p style={{ color: "#666767", fontSize: "13px" }}>
               By clicking "Sign up", you agree to our
               <span style={{ color: "#007ac6" }}>
@@ -120,7 +120,7 @@ const Auth = () => {
               ,<span style={{ color: "#007ac6" }}> privacy policy</span> and
               <span style={{ color: "#007ac6" }}> cookie policy.</span>
             </p>
-          )}
+          )} */}
         </form>
         <p style={{ position: "relative", top: "-12px" }}>
           {isSignup ? "Already have an account?" : "Don't have an account?"}
