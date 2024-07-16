@@ -1,40 +1,57 @@
 import React, { useState } from "react";
-import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
 
 import "./Auth.css";
 import icon from "../../assets/icon.png";
 import AboutAuth from "./AboutAuth";
-import { signup,login } from "../../actions/auth";
+import { signup, login } from "../../actions/auth";
 
 const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSwitch = () => {
     setIsSignup(!isSignup);
   };
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
-    if(!email && !password){
-      alert("Enter email and password.")
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email && !password) {
+      alert("Enter email and password.");
+      return;
     }
-    if(isSignup){
-      if(!name){
-        alert("Enter a name to continue.")
+    if (email && !password) {
+      alert("Please enter password.");
+      return;
+    }
+    if (!email && password) {
+      alert("Please enter email.");
+      return;
+    }
+    setLoading(true);
+    if (isSignup) {
+      if (!name) {
+        alert("Enter a name to continue.");
+        setLoading(false);
+        return;
       }
-      dispatch(signup({name, email, password}, navigate))
-    }else{
-      dispatch(login({email, password}, navigate))
+      dispatch(signup({ name, email, password }, navigate)).finally(() =>
+        setLoading(false)
+      );
+    } else {
+      dispatch(login({ email, password }, navigate)).finally(() =>
+        setLoading(false)
+      );
     }
-
-  }
+  };
 
   return (
     <section className="auth-section">
@@ -60,9 +77,14 @@ const Auth = () => {
 
           <label htmlFor="email">
             <h4>Email</h4>
-            <input type="email" name="email" id="email" onChange={(e) => {
-                  setEmail(e.target.value);
-                }}/>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
           </label>
           <label htmlFor="password">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -74,53 +96,29 @@ const Auth = () => {
                     fontSize: "13px",
                     cursor: "pointer",
                   }}
-                >
-                  {/* forgot password? */}
-                </p>
+                ></p>
               )}
             </div>
-            <input type="password" name="password" id="password" onChange={(e) => {
-                  setPassword(e.target.value);
-                }} />
-            {/* {isSignup && (
-              <p style={{ color: "#666767", fontSize: "13px" }}>
-                Passwords must contain at least eight
-                <br />
-                characters, including at least 1 letter and 1<br /> number.
-              </p>
-            )} */}
+            <input
+              type="password"
+              name="password"
+              id="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
           </label>
-          {/* {isSignup && (
-            <label htmlFor="check">
-              <input
-                type="checkbox"
-                id="check"
-                style={{ height: "20px", width: "20px" }}
-              />
-              <p style={{ fontSize: "13px" }}>
-                Opt-in to receive occasional,
-                <br />
-                product updates, user research invitations,
-                <br />
-                company announcements and digests.
-              </p>
-            </label>
-          )} */}
-          <button type="submit" className="auth-btn">
-            {isSignup ? "Sign up" : "Log in"}
-          </button>
-          {/* {isSignup && (
-            <p style={{ color: "#666767", fontSize: "13px" }}>
-              By clicking "Sign up", you agree to our
-              <span style={{ color: "#007ac6" }}>
-                {" "}
-                terms of
-                <br /> service
-              </span>
-              ,<span style={{ color: "#007ac6" }}> privacy policy</span> and
-              <span style={{ color: "#007ac6" }}> cookie policy.</span>
-            </p>
-          )} */}
+          <div className="auth-button-container">
+            {loading ? (
+              <div className="loading-spinner">
+                <Spin size="large" />
+              </div>
+            ) : (
+              <button type="submit" className="auth-btn">
+                {isSignup ? "Sign up" : "Log in"}
+              </button>
+            )}
+          </div>
         </form>
         <p style={{ position: "relative", top: "-12px" }}>
           {isSignup ? "Already have an account?" : "Don't have an account?"}

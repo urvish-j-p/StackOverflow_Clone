@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./HomeMainbar.css";
 import QuestionList from "./QuestionsList";
 import { useSelector } from "react-redux";
+import { Spin } from "antd";
 
 const HomeMainbar = () => {
   const location = useLocation();
@@ -10,7 +11,7 @@ const HomeMainbar = () => {
   const navigate = useNavigate();
 
   const questionsList = useSelector((state) => state.questionsReducer);
-  console.log(questionsList);
+  const searchQuery = useSelector((state) => state.searchQuery);
 
   const checkAuth = () => {
     if (user === null) {
@@ -20,6 +21,10 @@ const HomeMainbar = () => {
       navigate("/AskQuestion");
     }
   };
+
+  const filteredQuestions = questionsList.data?.filter((question) =>
+    question.questionTitle.toLowerCase().includes(searchQuery)
+  );
 
   return (
     <div className="main-bar">
@@ -35,18 +40,19 @@ const HomeMainbar = () => {
       </div>
       <div>
         {questionsList.data === null ? (
-          <div>
-            <div className="spinner"></div>
-            <h1 style={{textAlign:"center"}}>It may take few seconds...</h1>
+          <div className="loading-container">
+            <Spin size="large" style={{ fontSize: "50px" }} />
+            <h1 className="loading-text">
+              It may take few seconds<span className="dots">...</span>
+            </h1>
           </div>
         ) : (
           <>
-            <p>{questionsList.data.length} questions</p>
-            <QuestionList questionsList={questionsList.data} />
+            <p>{filteredQuestions.length} questions</p>
+            <QuestionList questionsList={filteredQuestions} />
           </>
         )}
       </div>
-      <h1></h1>
     </div>
   );
 };

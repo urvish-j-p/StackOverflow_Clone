@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import decode from 'jwt-decode';
 import { setCurrentUser } from '../../actions/currentUser';
+import { setSearchQuery } from '../../actions/search';
 import logo from '../../assets/logo-stackoverflow.png';
 import logo1 from '../../assets/icon.png';
 import search from '../../assets/magnifying-glass-solid.svg';
@@ -24,6 +25,11 @@ const Navbar = () => {
   const handleMenu = () => {
     const navbar = document.getElementById('sidebar');
     navbar.style.left = '0%';
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    dispatch(setSearchQuery(query));
   };
 
   useEffect(() => {
@@ -49,18 +55,8 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="nav-img" />
           <img src={logo1} alt="logo" className="nav-img1" />
         </Link>
-        {/* <Link to="/" className="nav-item nav-btn">
-          About
-        </Link>
-        <Link to="/" className="nav-item nav-btn">
-          Products
-        </Link>
-        <Link to="/" className="nav-item nav-btn">
-          For Teams
-        </Link> */}
-
         <form>
-          <input type="text" placeholder="search..." />
+          <input type="text" placeholder="search..." onChange={handleSearch} />
           <img src={search} alt="search" width="18" className="search-icon" />
         </form>
 
