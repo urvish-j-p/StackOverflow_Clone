@@ -1,59 +1,63 @@
-import React, { useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import copy from 'copy-to-clipboard';
-
-import './Questions.css';
-import upvote from '../../assets/sort-up.svg';
-import downvote from '../../assets/sort-down.svg';
-import Avatar from '../../components/Avatar/Avatar';
-import DisplayAnswer from './DisplayAnswer';
+import React, { useState } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import copy from "copy-to-clipboard";
+import { message } from 'antd';
+import "./Questions.css";
+import upvote from "../../assets/sort-up.svg";
+import downvote from "../../assets/sort-down.svg";
+import Avatar from "../../components/Avatar/Avatar";
+import DisplayAnswer from "./DisplayAnswer";
 import {
   deleteQuestion,
   postAnswer,
   voteQuestion,
-} from '../../actions/question.js';
+} from "../../actions/question.js";
 
 const QuestionsDetails = () => {
   const { id } = useParams();
 
   const questionsList = useSelector((state) => state.questionsReducer);
 
-  const [Answer, setAnswer] = useState('');
+  const [Answer, setAnswer] = useState("");
   const User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
   const url = "https://stack-overflow-by-urvish.netlify.app";
-  
 
-  const handlePostAns = (e, answerLength) => {
+  const handlePostAns = async (e, answerLength) => {
     e.preventDefault();
     if (User === null) {
-      alert('Please login or signup to answer a question');
-      navigate('/Auth');
+      alert("Please login or signup to answer a question");
+      navigate("/Auth");
     } else {
-      if (Answer === '') {
-        alert('Enter an answer before submitting');
+      if (Answer === "") {
+        alert("Enter an answer before submitting");
       } else {
-        dispatch(
-          postAnswer({
-            id,
-            noOfAnswers: answerLength + 1,
-            answerBody: Answer,
-            userAnswered: User.result.name,
-            userId: User.result._id,
-          })
-        );
+        try {
+          await dispatch(
+            postAnswer({
+              id,
+              noOfAnswers: answerLength + 1,
+              answerBody: Answer,
+              userAnswered: User.result.name,
+              userId: User.result._id,
+            })
+          );
+          setAnswer(""); 
+        } catch (error) {
+          console.error("Failed to post answer:", error);
+        }
       }
     }
   };
 
   const handleShare = () => {
     copy(url + location.pathname);
-    alert('Copied url :' + url + location.pathname);
+    message.success("URL Copied!");
   };
 
   const handleDelete = () => {
@@ -61,11 +65,11 @@ const QuestionsDetails = () => {
   };
 
   const handleUpVote = () => {
-    dispatch(voteQuestion(id, 'upVote', User.result._id));
+    dispatch(voteQuestion(id, "upVote", User.result._id));
   };
 
   const handleDownVote = () => {
-    dispatch(voteQuestion(id, 'downVote', User.result._id));
+    dispatch(voteQuestion(id, "downVote", User.result._id));
   };
 
   return (
@@ -98,7 +102,7 @@ const QuestionsDetails = () => {
                         className="votes-icon"
                       />
                     </div>
-                    <div style={{ width: '100%' }}>
+                    <div style={{ width: "100%" }}>
                       <p className="question-body">{question.questionBody}</p>
                       <div className="question-details-tags">
                         {question.questionTags.map((tag) => (
@@ -121,7 +125,7 @@ const QuestionsDetails = () => {
                           <Link
                             to={`/Users/${question.userId}`}
                             className="user-link"
-                            style={{ color: '#0086d8' }}
+                            style={{ color: "#0086d8" }}
                           >
                             <Avatar backgroundColor="orange" px="8px" py="5px">
                               {question.userPosted.charAt(0).toUpperCase()}
@@ -154,6 +158,7 @@ const QuestionsDetails = () => {
                     <textarea
                       cols="30"
                       rows="10"
+                      value={Answer}
                       onChange={(e) => setAnswer(e.target.value)}
                     ></textarea>
                     <br />
@@ -167,16 +172,16 @@ const QuestionsDetails = () => {
                     Browse other Question tagged
                     {question.questionTags.map((tag) => (
                       <Link to="/Tags" key={tag} className="ans-tags">
-                        {' '}
-                        {tag}{' '}
+                        {" "}
+                        {tag}{" "}
                       </Link>
-                    ))}{' '}
+                    ))}{" "}
                     or
                     <Link
                       to="/AskQuestion"
-                      style={{ textDecoration: 'none', color: '#009dff' }}
+                      style={{ textDecoration: "none", color: "#009dff" }}
                     >
-                      {' '}
+                      {" "}
                       ask your own question.
                     </Link>
                   </p>

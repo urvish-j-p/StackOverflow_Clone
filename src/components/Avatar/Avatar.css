@@ -1,0 +1,8 @@
+.avatar {
+  margin-right: 1rem;
+}
+@media (max-width: 768px) {
+  .avatar {
+    margin-right: 0;
+  }
+}

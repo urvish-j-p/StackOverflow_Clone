@@ -3,27 +3,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./HomeMainbar.css";
 import QuestionList from "./QuestionsList";
 import { useSelector } from "react-redux";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 
 const HomeMainbar = () => {
   const location = useLocation();
-  const user = 1;
   const navigate = useNavigate();
 
   const questionsList = useSelector((state) => state.questionsReducer);
   const searchQuery = useSelector((state) => state.searchQuery);
+  const user = useSelector((state) => state.currentUserReducer);
 
   const checkAuth = () => {
-    if (user === null) {
-      alert("login or signup to ask a question");
+    if (!user) {
+      message.warning("login or signup to ask a question!");
       navigate("/Auth");
     } else {
       navigate("/AskQuestion");
     }
   };
 
-  const filteredQuestions = questionsList.data?.filter((question) =>
-    question.questionTitle.toLowerCase().includes(searchQuery)
+  const filteredQuestions = questionsList?.data?.filter((question) =>
+    question?.questionTitle?.toLowerCase().includes(searchQuery)
   );
 
   return (
