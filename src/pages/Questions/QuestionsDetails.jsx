@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import copy from "copy-to-clipboard";
-import { message } from 'antd';
+import { message } from "antd";
 import "./Questions.css";
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
@@ -13,6 +13,7 @@ import {
   deleteQuestion,
   postAnswer,
   voteQuestion,
+  fetchAllQuestions
 } from "../../actions/question.js";
 
 const QuestionsDetails = () => {
@@ -47,8 +48,8 @@ const QuestionsDetails = () => {
               userId: User.result._id,
             })
           );
-          message.success('Answer posted successfully!');
-          setAnswer(""); 
+          message.success("Answer posted successfully!");
+          setAnswer("");
         } catch (error) {
           console.error("Failed to post answer:", error);
         }
@@ -64,18 +65,30 @@ const QuestionsDetails = () => {
   const handleDelete = async () => {
     try {
       await dispatch(deleteQuestion(id, navigate));
-      message.success('Question deleted successfully!');
+      message.success("Question deleted successfully!");
     } catch (error) {
-      message.error('Failed to delete the question. Please try again.');
+      message.error("Failed to delete the question. Please try again.");
     }
   };
 
-  const handleUpVote = () => {
-    dispatch(voteQuestion(id, "upVote", User.result._id));
+  const handleUpVote = async () => {
+    try {
+      await dispatch(voteQuestion(id, "upVote", User.result._id));
+      // Refetch questions to get the updated data
+      dispatch(fetchAllQuestions());
+    } catch (error) {
+      message.error("Failed to upvote the question. Please try again.");
+    }
   };
 
-  const handleDownVote = () => {
-    dispatch(voteQuestion(id, "downVote", User.result._id));
+  const handleDownVote = async () => {
+    try {
+      await dispatch(voteQuestion(id, "downVote", User.result._id));
+      // Refetch questions to get the updated data
+      dispatch(fetchAllQuestions());
+    } catch (error) {
+      message.error("Failed to downvote the question. Please try again.");
+    }
   };
 
   return (
