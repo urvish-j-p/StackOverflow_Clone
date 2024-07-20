@@ -1,4 +1,4 @@
-const questionsReducer = (state = { data: [] }, action) => {
+const questionsReducer = (state = { data: null }, action) => {
   switch (action.type) {
     case "FETCH_ALL_QUESTIONS":
       return { ...state, data: action.payload };
