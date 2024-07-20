@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin , message } from "antd";
 
 import "./Auth.css";
 import icon from "../../assets/icon.png";
@@ -25,21 +25,21 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email && !password) {
-      alert("Enter email and password.");
+      message.error("Enter email and password.");
       return;
     }
     if (email && !password) {
-      alert("Please enter password.");
+      message.error("Please enter password.");
       return;
     }
     if (!email && password) {
-      alert("Please enter email.");
+      message.error("Please enter email.");
       return;
     }
     setLoading(true);
     if (isSignup) {
       if (!name) {
-        alert("Enter a name to continue.");
+        message.error("Enter a name to continue.");
         setLoading(false);
         return;
       }

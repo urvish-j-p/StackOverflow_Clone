@@ -4,14 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { deleteAnswer } from "../../actions/question";
 import Avatar from "../../components/Avatar/Avatar";
+import { message } from "antd";
 
 const DisplayAnswer = ({ question, handleShare }) => {
   const User = useSelector((state) => state.currentUserReducer);
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const handleDelete = (answerId, noOfAnswers) => {
-    dispatch(deleteAnswer(id, answerId, noOfAnswers - 1));
+  const handleDelete = async (answerId, noOfAnswers) => {
+    try {
+      await dispatch(deleteAnswer(id, answerId, noOfAnswers - 1));
+      message.success("Answer deleted successfully!");
+    } catch (error) {
+      message.error("Failed to delete the answer. Please try again.");
+    }
   };
 
   return (

@@ -31,11 +31,11 @@ const QuestionsDetails = () => {
   const handlePostAns = async (e, answerLength) => {
     e.preventDefault();
     if (User === null) {
-      alert("Please login or signup to answer a question");
+      message.error("Please login or signup to answer a question.");
       navigate("/Auth");
     } else {
       if (Answer === "") {
-        alert("Enter an answer before submitting");
+        message.error("Enter an answer before posting.");
       } else {
         try {
           await dispatch(
@@ -47,6 +47,7 @@ const QuestionsDetails = () => {
               userId: User.result._id,
             })
           );
+          message.success('Answer posted successfully!');
           setAnswer(""); 
         } catch (error) {
           console.error("Failed to post answer:", error);
@@ -60,8 +61,13 @@ const QuestionsDetails = () => {
     message.success("URL Copied!");
   };
 
-  const handleDelete = () => {
-    dispatch(deleteQuestion(id, navigate));
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteQuestion(id, navigate));
+      message.success('Question deleted successfully!');
+    } catch (error) {
+      message.error('Failed to delete the question. Please try again.');
+    }
   };
 
   const handleUpVote = () => {
