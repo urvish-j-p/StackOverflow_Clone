@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: "https://stack-overflow-clone-api-by-urvish.vercel.app/",
 });
 
 API.interceptors.request.use((req) => {
