@@ -30,7 +30,7 @@ const HomeMainbar = () => {
     <div className="main-bar">
       <div className="main-bar-header">
         {location.pathname === "/" ? (
-          <h1>Top Questionsssss</h1>
+          <h1>Top Questions</h1>
         ) : (
           <h1>All Questions</h1>
         )}
