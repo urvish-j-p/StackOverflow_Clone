@@ -27,7 +27,7 @@ const QuestionsDetails = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const url = "https://stack-overflow-clone-by-urvish.vercel.app/";
+  const url = "https://stack-overflow-clone-by-urvish.vercel.app";
 
   const handlePostAns = async (e, answerLength) => {
     e.preventDefault();
