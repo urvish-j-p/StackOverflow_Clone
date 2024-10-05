@@ -77,7 +77,7 @@ const QuestionsDetails = () => {
       // Refetch questions to get the updated data
       dispatch(fetchAllQuestions());
     } catch (error) {
-      message.error("Failed to upvote the question. Please try again.");
+      message.error("Please login or signup to upvote the question.");
     }
   };
 
@@ -87,14 +87,14 @@ const QuestionsDetails = () => {
       // Refetch questions to get the updated data
       dispatch(fetchAllQuestions());
     } catch (error) {
-      message.error("Failed to downvote the question. Please try again.");
+      message.error("Please login or signup to downvote the question.");
     }
   };
 
   return (
     <div className="question-details-page">
       {questionsList.data === null || questionsList.data === undefined ? (
-        <h1>Loading...Please wait for a while...</h1>
+        <h1>Loading...</h1>
       ) : (
         <>
           {questionsList.data
