@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Spin , message } from "antd";
+import { Spin, message } from "antd";
 
 import "./Auth.css";
 import icon from "../../assets/icon.png";
-import AboutAuth from "./AboutAuth";
 import { signup, login } from "../../actions/auth";
 
 const Auth = () => {
@@ -55,11 +54,8 @@ const Auth = () => {
 
   return (
     <section className="auth-section">
-      {isSignup && <AboutAuth />}
       <div className="auth-container-2">
-        {!isSignup && (
-          <img src={icon} alt="stack overflow" className="login-logo" />
-        )}
+        <img src={icon} alt="stack overflow" className="login-logo" />
         <form onSubmit={handleSubmit}>
           {isSignup && (
             <label htmlFor="name">
