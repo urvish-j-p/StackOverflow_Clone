@@ -30,12 +30,12 @@ const HomeMainbar = () => {
     <div className="main-bar">
       <div className="main-bar-header">
         {location.pathname === "/" ? (
-          <h1>Top Questions</h1>
+          <h1>Top questions</h1>
         ) : (
-          <h1>All Questions</h1>
+          <h1>All questions</h1>
         )}
         <button onClick={checkAuth} className="ask-btn">
-          Ask Question
+          Ask question
         </button>
       </div>
       <div>
@@ -48,7 +48,13 @@ const HomeMainbar = () => {
           </div>
         ) : (
           <>
-            <p>{filteredQuestions.length} questions</p>
+            <p style={{textAlign:"center"}}>
+              {filteredQuestions.length === 0
+                ? "No question found!"
+                : `${filteredQuestions.length} ${
+                    filteredQuestions.length === 1 ? "question" : "questions"
+                  }`}
+            </p>
             <QuestionList questionsList={filteredQuestions} />
           </>
         )}
