@@ -13,7 +13,7 @@ import {
   deleteQuestion,
   postAnswer,
   voteQuestion,
-  fetchAllQuestions
+  fetchAllQuestions,
 } from "../../actions/question.js";
 
 const QuestionsDetails = () => {
@@ -187,7 +187,7 @@ const QuestionsDetails = () => {
                       defaultValue="Post Your Answer"
                     />
                   </form>
-                  <p>
+                  {/* <p>
                     Browse other Question tagged
                     {question.questionTags.map((tag) => (
                       <Link to="/Tags" key={tag} className="ans-tags">
@@ -203,7 +203,7 @@ const QuestionsDetails = () => {
                       {" "}
                       ask your own question.
                     </Link>
-                  </p>
+                  </p> */}
                 </section>
               </div>
             ))}
